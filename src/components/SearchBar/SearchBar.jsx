@@ -1,28 +1,26 @@
 import styles from './SearchBar.module.css'
-import { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
+function SearchBar({ onSubmit }) {
+  const [searchTerm, setSearchTerm] = useState('');
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {searchTerm:'' };
-  }
+  function handleSubmit (evt) {
+     evt.preventDefault();
+     if (searchTerm.trim() === '') {
+       return alert(`Please fill in the input!`);
+     }
+     onSubmit(searchTerm);
+     setSearchTerm('');
+   };
+
  
  
-  handleSubmit = evt => {
-    
-    evt.preventDefault();
-    if (this.state.searchTerm.trim() === "") {
-      return alert(`Please fill in the input!`);
-    }
-      this.props.onSubmit(this.state.searchTerm);
-      this.setState({ searchTerm: '' });
-  };
-  render() {
+ 
     return (
       <header className={styles.Searchbar}>
-        <form className={styles.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={styles.SearchForm} onSubmit={handleSubmit}>
           <input
             className={styles.SearchFormInput}
             name="searchTerm"
@@ -30,12 +28,9 @@ class SearchBar extends Component {
             autoComplete="off"
             autoFocus=""
             placeholder="Search images and photos"
-            value={this.state.searchTerm}
+            value={searchTerm}
             onChange={evt =>
-              this.setState({
-                ...this.state,
-                searchTerm: evt.target.value,
-              })
+              setSearchTerm(evt.target.value )
             }
           />
           <button type="submit" className={styles.SearchFormButton}>
@@ -46,6 +41,9 @@ class SearchBar extends Component {
         </form>
       </header>
     );
-  }
 }
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func,
+};
 export default SearchBar;
