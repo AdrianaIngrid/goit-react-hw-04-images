@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api/';
 const PIXABAY_API_KEY = '44045744-87391f93bf3caee56476bbdd7';
 const INITIAL_PER_PAGE = 12;
 
-function App (props) {
+function App () {
   const [images, setImages] = useState([]);
   const [query, setQuery] = useState('');
   const [error, setError] = useState(null);
